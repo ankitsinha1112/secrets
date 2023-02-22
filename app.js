@@ -10,6 +10,8 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const findOrCreate = require('mongoose-findorcreate');
 
+const port = process.env.PORT || 3000;
+
 
 
 const app = express();
@@ -86,6 +88,7 @@ passport.deserializeUser(function (user, cb) {
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
+
     callbackURL: "http://localhost:3000/auth/google/secrets",
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
 },
@@ -204,10 +207,14 @@ app.post("/login", function (req, res) {
 
 
 
-
-
-app.listen(3000, function () {
+app.listen(port, function () {
     console.log("Server started on port 3000");
 })
+
+
+
+
+
+
 
 
